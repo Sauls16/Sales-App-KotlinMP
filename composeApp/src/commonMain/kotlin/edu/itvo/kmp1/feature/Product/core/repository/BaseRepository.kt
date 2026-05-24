@@ -1,9 +1,8 @@
-package edu.itvo.kmp1.feature.customer.core.repository
+package edu.itvo.kmp1.feature.Product.core.repository
 
 import kotlinx.coroutines.flow.Flow
 
-
-interface BaseRepository<T, ID> {
+interface BaseRepository <T, ID> {
 
     fun observeAll(): Flow<List<T>>
 
@@ -12,6 +11,4 @@ interface BaseRepository<T, ID> {
     suspend fun save(item: T)
 
     suspend fun deleteById(id: ID)
-
-    suspend fun update(item: T)
 }

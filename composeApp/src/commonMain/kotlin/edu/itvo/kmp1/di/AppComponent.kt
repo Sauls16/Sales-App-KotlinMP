@@ -16,7 +16,7 @@ class AppComponent {
     private val api =
         CustomerApi(
             client = httpClient,
-            baseUrl = "http://10.1.6.138:3000"
+            baseUrl = "http://192.168.1.11:3000"
         )
 
     private val remote =

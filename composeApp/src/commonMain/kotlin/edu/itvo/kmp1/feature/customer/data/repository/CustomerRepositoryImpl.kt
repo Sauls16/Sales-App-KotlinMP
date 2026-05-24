@@ -59,4 +59,8 @@ class CustomerRepositoryImpl(
 
         remote.deleteCustomer(id)
     }
+
+    override suspend fun update(item: Customer){
+        remote.updateCustomer(item.id, item.toDto())
+    }
 }

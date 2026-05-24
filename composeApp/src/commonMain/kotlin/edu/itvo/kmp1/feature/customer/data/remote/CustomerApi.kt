@@ -41,4 +41,17 @@ class CustomerApi(
             "$baseUrl/customers/$id"
         )
     }
+
+    suspend fun updateCustomer(
+        id: String, customer: CustomerDto
+    ){
+        client.put(
+            "$baseUrl/customers/$id"
+        ){
+            contentType(ContentType.Application.Json)
+            setBody(customer)
+        }
+    }
+
+
 }

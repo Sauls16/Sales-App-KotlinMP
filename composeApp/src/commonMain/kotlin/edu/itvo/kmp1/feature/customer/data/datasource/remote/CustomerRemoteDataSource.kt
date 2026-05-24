@@ -1,6 +1,5 @@
 package edu.itvo.kmp1.feature.customer.data.datasource.remote
 
-
 import edu.itvo.kmp1.feature.customer.data.dto.CustomerDto
 import edu.itvo.kmp1.feature.customer.data.remote.CustomerApi
 
@@ -25,5 +24,11 @@ class CustomerRemoteDataSource(
     ) {
 
         api.deleteCustomer(id)
+    }
+
+    suspend fun updateCustomer(
+        id: String, customer: CustomerDto
+    ){
+         api.updateCustomer(id,customer)
     }
 }
