@@ -1,6 +1,6 @@
 package edu.itvo.kmp1.feature.Product.data.repository
 
-import edu.itvo.kmp1.feature.Product.data.datasource.remote.ProductRemoteDatasource
+import edu.itvo.kmp1.feature.Product.data.datasource.remote.ProductRemoteDataSource
 import edu.itvo.kmp1.feature.Product.data.mapper.toDomain
 import edu.itvo.kmp1.feature.Product.data.mapper.toDto
 import edu.itvo.kmp1.feature.Product.domain.model.Product
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class ProductRepositoryImpl(
-    private val remote: ProductRemoteDatasource
+    private val remote: ProductRemoteDataSource
 ): ProductRepository {
 
     override fun observeAll(): Flow<List<Product>> = flow {

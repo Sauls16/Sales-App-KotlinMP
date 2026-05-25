@@ -8,7 +8,8 @@ import edu.itvo.kmp1.feature.customer.presentation.viewmodel.CustomerViewModel
 import edu.itvo.kmp1.feature.customer.domain.usecase.ObserveCustomersUseCase
 import edu.itvo.kmp1.feature.customer.domain.usecase.SaveCustomerUseCase
 import edu.itvo.kmp1.feature.customer.domain.usecase.DeleteCustomerUseCase
-
+import edu.itvo.kmp1.feature.customer.domain.usecase.UpdateCustomerUseCase
+/*
 class AppComponentLocal {
 
     private val repository: CustomerRepository by lazy {
@@ -27,11 +28,17 @@ class AppComponentLocal {
         DeleteCustomerUseCase(repository)
     }
 
+    private val updateCustomerUseCase by lazy {
+        UpdateCustomerUseCase(repository)
+    }
+
     val customerViewModel: CustomerViewModel by lazy {
         CustomerViewModel(
             observeCustomersUseCase,
             saveCustomerUseCase,
-            deleteCustomerUseCase
+            deleteCustomerUseCase,
+            updateCustomerUseCase
         )
     }
 }
+*/

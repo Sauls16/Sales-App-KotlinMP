@@ -1,4 +1,4 @@
-package edu.itvo.kmp1.feature.customer.presentation.component
+package edu.itvo.kmp1.feature.Product.presentation.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,45 +17,51 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import edu.itvo.kmp1.feature.customer.domain.model.Customer
+import edu.itvo.kmp1.feature.Product.domain.model.Product
 
 @Composable
-fun CustomerItemCard(
-    customer: Customer,
+fun ProductItemCard(
+    product: Product,
     onDeleteClick: () -> Unit
-) {
-
+){
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp
         )
-    ) {
-
+    ){
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
-        ) {
-
+        ){
             Column {
 
                 Text(
-                    text = "Nombre: ${customer.name}",
+                    text = product.description,
                     style = MaterialTheme.typography.titleMedium
                 )
 
                 Text(
-                    text = "Email: ${customer.email}",
+                    text = "Código: ${product.code}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+
+                Text(
+                    text = "Precio: $${product.price}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+
+                Text(
+                    text = "Stock: ${product.stock}",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
-
             TextButton(
                 onClick = onDeleteClick
-            ) {
+            ){
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Eliminar",

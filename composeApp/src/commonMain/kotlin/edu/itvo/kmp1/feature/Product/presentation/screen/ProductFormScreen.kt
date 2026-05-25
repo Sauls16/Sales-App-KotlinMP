@@ -1,0 +1,91 @@
+package edu.itvo.kmp1.feature.Product.presentation.screen
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import edu.itvo.kmp1.feature.Product.domain.model.Product
+import edu.itvo.kmp1.feature.Product.presentation.component.ProductFormCard
+import edu.itvo.kmp1.feature.Product.presentation.event.ProductEvent
+import edu.itvo.kmp1.feature.Product.presentation.viewmodel.ProductViewModel
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ProductFormScreen(
+    viewModel: ProductViewModel,
+    onBack: () -> Unit
+) {
+    var code by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+    var category by remember { mutableStateOf("") }
+    var price by remember { mutableStateOf("") }
+    var stock by remember { mutableStateOf("") }
+    var isTaxable by remember { mutableStateOf(true) }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text("Product Form")
+                },
+                navigationIcon = {
+                    TextButton(onClick = onBack) {
+                        Text("Back")
+                    }
+                }
+            )
+        }
+    ) { padding ->
+
+        Column(
+            modifier = Modifier
+                .padding(padding)
+        ) {
+            ProductFormCard(
+                code = code,
+                description = description,
+                category = category,
+                price = price,
+                stock = stock,
+                taxable = isTaxable,
+                onCodeChange = { code = it },
+                onDescriptionChange = { description = it },
+                onCategoryChange = { category = it },
+                onPriceChange = { price = it },
+                onStockChange = { stock = it },
+                onTaxableChange = { isTaxable = it },
+                onSaveClick = {
+                    viewModel.onEvent(
+                        ProductEvent.SaveProduct(
+                            Product(
+                                code = code,
+                                description = description,
+                                category = category,
+                                price = price.toDoubleOrNull() ?: 0.0,
+                                stock = stock.toIntOrNull() ?: 0,
+                                taxable = isTaxable
+                            )
+                        )
+                    )
+                    code = ""
+                    description = ""
+                    category = ""
+                    price = ""
+                    stock = ""
+                    isTaxable = true
+
+                    onBack()
+                }
+            )
+        }
+    }
+}

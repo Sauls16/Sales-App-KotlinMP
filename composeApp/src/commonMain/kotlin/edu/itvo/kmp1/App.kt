@@ -16,7 +16,8 @@ fun App() {
 
     MaterialTheme {
         AppNavHost(
-            customerViewModel = component.customerViewModel
+            customerViewModel = component.customerViewModel,
+            productViewModel = component.productViewModel
         )
     }
 }

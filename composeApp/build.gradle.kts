@@ -91,6 +91,8 @@ kotlin {
 
             implementation("io.ktor:ktor-client-logging:3.4.3")
             implementation("io.ktor:ktor-client-auth:3.4.3")
+
+            implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
         }
 
         commonTest.dependencies {

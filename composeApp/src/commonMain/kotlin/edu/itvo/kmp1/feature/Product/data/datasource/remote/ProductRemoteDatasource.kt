@@ -4,7 +4,7 @@ import edu.itvo.kmp1.feature.Product.data.dto.ProductDto
 import edu.itvo.kmp1.feature.Product.data.remote.ProductApi
 
 
-class ProductRemoteDatasource(
+class ProductRemoteDataSource(
     private val api: ProductApi
 ) {
     suspend fun getProducts(): List<ProductDto> {

@@ -11,4 +11,9 @@ sealed interface CustomerEvent {
     data class DeleteCustomer(
         val id: String
     ) : CustomerEvent
+
+    data class UpdateCustomer(
+        val customer: Customer
+    ): CustomerEvent
+
 }
