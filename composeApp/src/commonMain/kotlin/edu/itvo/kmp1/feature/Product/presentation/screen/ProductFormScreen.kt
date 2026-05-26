@@ -78,18 +78,21 @@ fun ProductFormScreen(
                 onStockChange = { stock = it },
                 onTaxableChange = { isTaxable = it },
                 onSaveClick = {
-                    viewModel.onEvent(
-                        ProductEvent.SaveProduct(
-                            Product(
-                                code = code,
-                                description = description,
-                                category = category,
-                                price = price.toDoubleOrNull() ?: 0.0,
-                                stock = stock.toIntOrNull() ?: 0,
-                                taxable = isTaxable
-                            )
-                        )
+                    val product = Product(
+                            code = code,
+                            description = description,
+                            category = category,
+                            price = price.toDoubleOrNull() ?: 0.0,
+                            stock = stock.toIntOrNull() ?: 0,
+                            taxable = isTaxable
                     )
+
+                    if (selected == null){
+                        viewModel.onEvent(ProductEvent.SaveProduct(product))
+                    }else{
+                        viewModel.onEvent(ProductEvent.UpdateProduct(product))
+                    }
+
                     code = ""
                     description = ""
                     category = ""

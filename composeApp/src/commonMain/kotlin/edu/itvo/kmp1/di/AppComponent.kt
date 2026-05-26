@@ -19,6 +19,7 @@ import edu.itvo.kmp1.feature.Product.domain.usecase.ObserveProductsUseCase
 import edu.itvo.kmp1.feature.Product.domain.usecase.SaveProductUseCase
 import edu.itvo.kmp1.feature.Product.domain.usecase.UpdateProductUseCase
 import edu.itvo.kmp1.feature.Product.presentation.viewmodel.ProductViewModel
+import edu.itvo.kmp1.feature.customer.data.repository.CustomerRepositoryLocalImpl
 
 class AppComponent {
 
@@ -29,13 +30,14 @@ class AppComponent {
         CustomerApi(
             client = httpClient,
             baseUrl = "http://192.168.0.5:3000"
+
         )
 
     private val remote =
         CustomerRemoteDataSource(api)
 
     private val repository =
-        CustomerRepositoryImpl(remote)
+        CustomerRepositoryLocalImpl(remote)
 
     private val observeCustomersUseCase =
         ObserveCustomersUseCase(repository)

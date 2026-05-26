@@ -23,22 +23,15 @@ abstract class BaseInMemoryRepository<T, ID>(
     }
 
     override suspend fun save(item: T) {
-
         state.update { current ->
+            val exists = current.any { getId(it) == getId(item) }
 
-            val mutable = current.toMutableList()
-
-            val index = mutable.indexOfFirst {
-                getId(it) == getId(item)
-            }
-
-            if (index >= 0) {
-                mutable[index] = item
+            if (exists) {
+                current.map { if (getId(it) == getId(item)) item else it }
             } else {
-                mutable.add(item)
+                current + item
             }
 
-            mutable
         }
     }
 

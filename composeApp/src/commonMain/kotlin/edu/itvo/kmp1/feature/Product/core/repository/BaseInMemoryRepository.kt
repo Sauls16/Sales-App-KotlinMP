@@ -39,7 +39,7 @@ abstract class BaseInMemoryRepository<T, ID>(
                 mutable.add(item)
             }
 
-            mutable
+            mutable.toList()
         }
     }
 

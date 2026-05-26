@@ -68,17 +68,12 @@ fun CustomerFormScreen(
                 onNameChange = { name = it },
                 onEmailChange = { email = it },
                 onSaveClick = {
-
-                    viewModel.onEvent(
-                        CustomerEvent.SaveCustomer(
-                            Customer(
-                                id = id,
-                                name = name,
-                                email = email
-                            )
-
-                        )
-                    )
+                    val customer = Customer(id = id, name = name, email = email)
+                    if (selected == null){
+                        viewModel.onEvent(CustomerEvent.SaveCustomer(customer))
+                    }else{
+                        viewModel.onEvent(CustomerEvent.UpdateCustomer(customer))
+                    }
 
                     id = ""
                     name = ""

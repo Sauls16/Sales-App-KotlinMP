@@ -31,6 +31,7 @@ fun CustomerListScreen(
 
     val customers by viewModel.customers.collectAsState()
 
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -58,8 +59,10 @@ fun CustomerListScreen(
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-
-            items(customers) { customer ->
+            items(
+                items = customers,
+                key = { it.id }
+            ) { customer ->
 
                 CustomerItemCard(
                     customer = customer,
@@ -73,5 +76,6 @@ fun CustomerListScreen(
                 )
             }
         }
+
     }
 }
