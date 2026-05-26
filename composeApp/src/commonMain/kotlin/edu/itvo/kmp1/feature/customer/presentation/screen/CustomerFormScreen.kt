@@ -26,7 +26,7 @@ fun CustomerFormScreen(
     viewModel: CustomerViewModel,
     onBack: () -> Unit
 ) {
-
+    val selected = viewModel.selectedCustomer
     var id by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -35,7 +35,7 @@ fun CustomerFormScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Customer Form")
+                    Text(if (selected == null) "Nuevo Cliente" else "Editar Cliente")
                 },
                 navigationIcon = {
                     TextButton(onClick = onBack) {

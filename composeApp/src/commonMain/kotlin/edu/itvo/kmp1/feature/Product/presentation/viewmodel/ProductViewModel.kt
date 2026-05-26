@@ -1,8 +1,11 @@
 package edu.itvo.kmp1.feature.Product.presentation.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import edu.itvo.kmp1.feature.Product.domain.model.Product
 import edu.itvo.kmp1.feature.Product.domain.usecase.DeleteProductUseCase
-import edu.itvo.kmp1.feature.Product.domain.usecase.ObserveProducstUseCase
+import edu.itvo.kmp1.feature.Product.domain.usecase.ObserveProductsUseCase
 import edu.itvo.kmp1.feature.Product.domain.usecase.SaveProductUseCase
 import edu.itvo.kmp1.feature.Product.domain.usecase.UpdateProductUseCase
 import edu.itvo.kmp1.feature.Product.presentation.event.ProductEvent
@@ -14,7 +17,7 @@ import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 
 class ProductViewModel @Inject constructor(
-    private val observeProductsUseCase: ObserveProducstUseCase,
+    private val observeProductsUseCase: ObserveProductsUseCase,
     private val saveProductUseCase: SaveProductUseCase,
     private val deleteProductUseCase: DeleteProductUseCase,
     private val updateProductUseCase: UpdateProductUseCase
@@ -23,6 +26,13 @@ class ProductViewModel @Inject constructor(
 
     private val _products = MutableStateFlow<List<Product>>(emptyList())
     val products: StateFlow<List<Product>> = _products
+
+    var selectedProduct by mutableStateOf<Product?>(null)
+        private set
+
+    fun selectProduct(product: Product?) {
+        selectedProduct = product
+    }
 
     init {
         observeProducts()

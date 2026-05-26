@@ -62,7 +62,7 @@ fun ProductFormCard(
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text("Descripción")
-                    },
+            },
             singleLine = true
         )
 

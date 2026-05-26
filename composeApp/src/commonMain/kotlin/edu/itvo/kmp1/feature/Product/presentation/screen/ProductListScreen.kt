@@ -41,11 +41,15 @@ fun ProductListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = onAddClick
+                onClick = {
+                    viewModel.selectProduct(null)
+                    onAddClick()
+                }
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Agregar")
             }
         }
+
     ) { padding ->
 
         LazyColumn(
@@ -59,12 +63,17 @@ fun ProductListScreen(
 
                 ProductItemCard(
                     product = product,
+                    onEditClick = {
+                        viewModel.selectProduct(product)
+                        onAddClick()
+                    },
                     onDeleteClick = {
-                        viewModel.onEvent(
-                            ProductEvent.DeleteProduct(product.code)
-                        )
+                        viewModel.onEvent(ProductEvent.DeleteProduct(product.code))
                     }
+
                 )
+
+
             }
         }
     }

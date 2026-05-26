@@ -1,5 +1,6 @@
 package edu.itvo.kmp1.navigation
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -10,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,7 +23,6 @@ import edu.itvo.kmp1.feature.Product.presentation.viewmodel.ProductViewModel
 import edu.itvo.kmp1.feature.customer.presentation.screen.CustomerFormScreen
 import edu.itvo.kmp1.feature.customer.presentation.screen.CustomerListScreen
 import edu.itvo.kmp1.feature.customer.presentation.viewmodel.CustomerViewModel
-
 
 @Composable
 fun AppNavHost(
@@ -66,50 +67,51 @@ fun AppNavHost(
             }
         }
     ) { innerPadding ->
-    NavHost(
-        navController = navController,
-        startDestination = CustomerRoutes.List.route
-    ) {
+        NavHost(
+            navController = navController,
+            startDestination = CustomerRoutes.List.route,
+            modifier = Modifier.padding(innerPadding)
+        ) {
 
-        composable(CustomerRoutes.List.route) {
+            composable(CustomerRoutes.List.route) {
 
-            CustomerListScreen(
-                viewModel = customerViewModel,
-                onAddClick = {
-                    navController.navigate(CustomerRoutes.Form.route)
-                }
-            )
+                CustomerListScreen(
+                    viewModel = customerViewModel,
+                    onAddClick = {
+                        navController.navigate(CustomerRoutes.Form.route)
+                    }
+                )
+            }
+
+            composable(CustomerRoutes.Form.route) {
+
+                CustomerFormScreen(
+                    viewModel = customerViewModel,
+                    onBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+
+            composable(ProductRoutes.List.route) {
+                ProductListScreen(
+                    viewModel = productViewModel,
+                    onAddClick = {
+                        navController.navigate(ProductRoutes.Form.route)
+                    }
+                )
+            }
+
+            composable(ProductRoutes.Form.route) {
+                ProductFormScreen(
+                    viewModel = productViewModel,
+                    onBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+
         }
-
-        composable(CustomerRoutes.Form.route) {
-
-            CustomerFormScreen(
-                viewModel = customerViewModel,
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
-        }
-
-        composable(ProductRoutes.List.route) {
-            ProductListScreen(
-                viewModel = productViewModel,
-                onAddClick = {
-                    navController.navigate(ProductRoutes.Form.route)
-                }
-            )
-        }
-
-        composable(ProductRoutes.Form.route) {
-            ProductFormScreen(
-                viewModel = productViewModel,
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
-        }
-
-    }
 
     }
 }

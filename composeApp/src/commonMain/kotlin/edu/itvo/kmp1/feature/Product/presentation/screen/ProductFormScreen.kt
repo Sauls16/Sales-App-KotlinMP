@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +25,7 @@ fun ProductFormScreen(
     viewModel: ProductViewModel,
     onBack: () -> Unit
 ) {
+    val selected = viewModel.selectedProduct
     var code by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("") }
@@ -31,11 +33,23 @@ fun ProductFormScreen(
     var stock by remember { mutableStateOf("") }
     var isTaxable by remember { mutableStateOf(true) }
 
+    //llenar si hay producto seleccionado
+    LaunchedEffect(selected) {
+        selected?.let {
+            code = it.code
+            description = it.description
+            category = it.category
+            price = it.price.toString()
+            stock = it.stock.toString()
+            isTaxable = it.taxable
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Product Form")
+                    Text(if (selected == null) "Nuevo Producto" else "Editar Producto")
                 },
                 navigationIcon = {
                     TextButton(onClick = onBack) {

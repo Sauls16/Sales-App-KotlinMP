@@ -14,7 +14,8 @@ import edu.itvo.kmp1.feature.customer.presentation.viewmodel.CustomerViewModel
 import edu.itvo.kmp1.feature.Product.data.remote.ProductApi
 import edu.itvo.kmp1.feature.Product.data.repository.ProductRepositoryImpl
 import edu.itvo.kmp1.feature.Product.domain.usecase.DeleteProductUseCase
-import edu.itvo.kmp1.feature.Product.domain.usecase.ObserveProducstUseCase
+import edu.itvo.kmp1.feature.Product.domain.usecase.ObserveProductsUseCase
+
 import edu.itvo.kmp1.feature.Product.domain.usecase.SaveProductUseCase
 import edu.itvo.kmp1.feature.Product.domain.usecase.UpdateProductUseCase
 import edu.itvo.kmp1.feature.Product.presentation.viewmodel.ProductViewModel
@@ -65,7 +66,7 @@ class AppComponent {
                 private val productRemote = ProductRemoteDataSource(productApi)
                 private val productRepository = ProductRepositoryImpl(productRemote)
 
-                private val observeProductsUseCase = ObserveProducstUseCase(productRepository)
+                private val observeProductsUseCase = ObserveProductsUseCase(productRepository)
                 private val saveProductUseCase = SaveProductUseCase(productRepository)
                 private val deleteProductUseCase = DeleteProductUseCase(productRepository)
                 private val updateProductUseCase = UpdateProductUseCase(productRepository)

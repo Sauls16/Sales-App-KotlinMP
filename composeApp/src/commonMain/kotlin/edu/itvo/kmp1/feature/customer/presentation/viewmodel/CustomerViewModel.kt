@@ -1,5 +1,8 @@
 package edu.itvo.kmp1.feature.customer.presentation.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import edu.itvo.kmp1.feature.customer.domain.model.Customer
 import edu.itvo.kmp1.feature.customer.domain.usecase.DeleteCustomerUseCase
 import edu.itvo.kmp1.feature.customer.domain.usecase.ObserveCustomersUseCase
@@ -29,6 +32,12 @@ class CustomerViewModel @Inject constructor(
 
     init {
         observeCustomers()
+    }
+
+    var selectedCustomer by mutableStateOf<Customer?>(null)
+
+    fun selectCustomer(customer: Customer?){
+        selectedCustomer = customer
     }
 
     private fun observeCustomers() {

@@ -6,47 +6,54 @@ import edu.itvo.kmp1.feature.Product.data.mapper.toDto
 import edu.itvo.kmp1.feature.Product.domain.model.Product
 import edu.itvo.kmp1.feature.Product.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 
 class ProductRepositoryImpl(
     private val remote: ProductRemoteDataSource
 ): ProductRepository {
 
-    override fun observeAll(): Flow<List<Product>> = flow {
-        val products =
-            remote.getProducts()
+    private val localProducts = MutableStateFlow<List<Product>>(emptyList())
 
-        emit(
-            products.map {
-                it.toDomain()
-            }
-        )
+    override fun observeAll(): Flow<List<Product>> = flow {
+        try {
+            val remoteData = remote.getProducts()
+                .map {
+                    it.toDomain()
+                }
+            localProducts.value = remoteData
+        } catch (e: Exception){
+
+        }
+        localProducts.collect { emit(it) }
     }
 
     override suspend fun findById(id: String): Product? {
-        return  observeAll().let { flow ->
-            var result: Product? = null
-
-            flow.collect { products ->
-
-                result = products.find {
-                    it.code == id
-                }
-            }
-            result
-        }
+        return localProducts.value.find { it.code == id }
     }
 
     override suspend fun save(item: Product) {
-        remote.saveProduct(item.toDto())
+        localProducts.value = localProducts.value.filter { it.code != item.code } + item
+
+        try {
+            remote.saveProduct(item.toDto())
+        } catch (e: Exception) {}
     }
 
     override suspend fun deleteById(id: String) {
-        remote.deleteProduct(id)
+        localProducts.value = localProducts.value.filter { it.code != id }
+
+        try {
+            remote.deleteProduct(id)
+        } catch (e: Exception) {}
     }
 
     override suspend fun update(item: Product) {
-        remote.updateProduct(item.code, item.toDto())
+        localProducts.value = localProducts.value.map { if (it.code == item.code) item else it }
+
+        try {
+            remote.updateProduct(item.code, item.toDto())
+        } catch (e: Exception) {}
     }
 
 }
